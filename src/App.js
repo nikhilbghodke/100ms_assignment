@@ -97,61 +97,6 @@ class App extends Component{
 
   }
 
-  componentDidMount=async ()=>{
-    // try{
-    //   let roomId= await this._createRoom("great")
-    //   let client = await this._createClient("nikhil",roomId, "host")
-    //   console.log(client)
-    //   await client.connect()
-    //   console.log("Client connescted")
-    //   client.on('connect',async () => {
-    //     try {
-    //         await client.join(roomId);
-    //         const localStream = await client.getLocalStream({
-    //           resolution: "vga",
-    //           bitrate: 256,
-    //           codec: "VP8",
-    //           frameRate: 20,
-    //           shouldPublishAudio:true,
-    //           shouldPublishVideo:true
-    //         });
-    //         // console.log(localStream)
-            
-    //         // await client.publish(localStream, roomId);
-            
-    //     } catch(err) {
-    //         // Handle error
-    //     }
-    //   });
-    //   client.on('disconnect', () => {});
-
-    //   client.on('disconnect', () => {});
-
-    //   client.on('peer-join', (room, peer) => {
-    //       // Show a notification or toast message in the UI
-    //   });
-
-    //   client.on('peer-leave', (room, peer) => {
-    //       // Show a notification or toast message in the UI
-    //   });
-
-    //   client.on('stream-add', (room,  streamInfo) => {
-    //       // subscribe to the stream if needed
-    //   });
-
-    //   client.on('stream-remove', (room, streamInfo) => {
-    //       // Remove remote stream if needed
-    //   });
-
-    //   client.on('broadcast', (room, peer ,message) => {
-    //       // Show a notification or update chat UI
-    //   });
-      
-    // }
-    // catch(e){
-    //   console.log(e)
-    // }
-  }
 
   render(){
     return(
@@ -167,8 +112,10 @@ class App extends Component{
     )}>
             
         </Route>
-        <Route exact path="/room">
-            <Conference {...this.state} />
+        <Route exact path="/room" render={(props)=>(
+          <Conference {...this.state}  {...props} />
+    )}>
+            
         </Route>
         <Route exact path="/" render={() => (<Redirect to="/createRoom" />)} />
         </Switch>

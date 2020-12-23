@@ -1,6 +1,28 @@
 import React,{Component} from "react"
 import { Redirect } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
+import Grid from '@material-ui/core/Grid';
+import VideoView from "./../components/VideoView"
+import { withStyles } from "@material-ui/core/styles";
+import NavBar from "./../components/Navbar"
+import Controls from "./../components/Controls"
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
+const styles = (theme) => ({
+    root:{
+        height:"100vh",
+        backgroundColor:"#a8d8ea"
+    },
+    videos:{
+        height:"70vh"
+        
+    },
+    backdrop: {
+      zIndex: theme.zIndex.drawer + 1,
+      color: '#aa96da',
+    },
+    
+  })
 class Conference extends Component{
     constructor(props){
         super(props)
@@ -8,8 +30,6 @@ class Conference extends Component{
             streams: [],
             streamInfo: [],
             localStream: null,
-            audioMuted: false,
-            videoMuted: false,
             pinned: false,
           };
         console.log(props)
@@ -25,10 +45,10 @@ class Conference extends Component{
         this.setState({...this.state ,streams },()=>{
             console.log(this.state)
         });
-    }
-    catch(e){
-        console.log(e)
-    }
+        }
+        catch(e){
+            console.log(e)
+        }
 
         
       };
@@ -42,13 +62,7 @@ class Conference extends Component{
         });
       };
 
-    render(){
-        if (!this.props.client) {
-            console.log("Redirecting to Create Room page....")
-            return <Redirect to="/" />;
-        }
-        return (<div>Inside Call</div>)
-    }
+    
 
     componentDidMount=async ()=>{
         try{
@@ -74,7 +88,9 @@ class Conference extends Component{
                   shouldPublishVideo:true
                 });
                 console.log(localStream)
+                
                 await client.publish(localStream, roomId);
+                
                 this.setState({...this.state,localStream})
             } catch(err) {
                 // Handle error
@@ -102,6 +118,39 @@ class Conference extends Component{
           console.log(e)
         }
       }
+
+      disconnect=()=>{
+        this.props.client.disconnect()
+        this.props.history.push("/createRoom")
+      }
+
+      render(){
+        const { classes } = this.props;
+        let {client,roomId} = this.props
+        if (!this.props.client) {
+            console.log("Redirecting to Create Room page....")
+            return <Redirect to="/" />;
+        }
+        let selfVideo=null
+        if(this.state.localStream)
+        selfVideo=<VideoView stream={this.state.localStream}/>
+        let videos=(this.state.streams.map((val,index)=>{
+            console.log(val)
+            return(<VideoView stream={val.stream}/>)
+        }))
+        
+        return (<Grid container className={classes.root}>
+                        <NavBar/>
+                    <Grid container item xs={12} spacing={3} className={classes.videos} justify="center" alignItems="center">
+                        {this.state.localStream?selfVideo:<CircularProgress className={classes.backdrop} color="inherit" />}{videos}
+                    </Grid>
+                    <Grid container item={12} alignItems="center" justify="center">
+                      <Grid item xs={4}>
+                        <Controls {...this.state} client={client} roomId={roomId} disconnect={this.disconnect}/>
+                      </Grid>
+                    </Grid>
+                </Grid>)
+    }
 }
 
-export default withRouter(Conference)
+export default withStyles(styles, { withTheme: true })(Conference);
