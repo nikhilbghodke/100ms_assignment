@@ -1,3 +1,17 @@
+# What has be completed
+
+User can create and join a room, for creating a room i have CreateRoom.js inside src/layouts and for joingRoom i have JoinRoom.js inside src/layouts/
+App.js ( the root component) stores the client and roomid in its state and has functions for creating room and creating client
+Conference.js, another file within src/layouts/ is responsible for connecting the client, setting all event handlers on client and also joining the room.
+
+if you need to know the id of the created room, look inside the state of App.js or inspect network for /api=room, ( sorry i should have logged it somewhere at better place)
+
+
+
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
