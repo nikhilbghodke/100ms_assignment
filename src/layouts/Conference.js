@@ -133,10 +133,10 @@ class Conference extends Component{
         }
         let selfVideo=null
         if(this.state.localStream)
-        selfVideo=<VideoView stream={this.state.localStream}/>
+        selfVideo=<VideoView stream={this.state.localStream} isLocal={true}/>
         let videos=(this.state.streams.map((val,index)=>{
             console.log(val)
-            return(<VideoView stream={val.stream}/>)
+            return(<VideoView stream={val.stream} isLocal={false}/>)
         }))
         
         return (<Grid container className={classes.root}>

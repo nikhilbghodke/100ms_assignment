@@ -23,7 +23,7 @@ export default class VideoView extends Component{
           id={12}
           autoPlay
           playsInline
-          muted={false}
+          muted={this.props.isLocal}
           width="100%"
           height="100%"
         />
