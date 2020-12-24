@@ -35,7 +35,8 @@ class App extends Component{
   }
 
   _createClient = async ( userName, roomId, role="guest" ) => {
-    let url = "wss://prod-in.100ms.live"
+    let url = "wss://qa-in.100ms.live"
+    //url="https://qa-in.100ms.live/"
     let authToken = await getToken({
       room_id: roomId,
       user_name: userName,
