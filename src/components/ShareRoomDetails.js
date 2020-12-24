@@ -8,6 +8,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import ShareIcon from '@material-ui/icons/Share';
 import IconButton from '@material-ui/core/IconButton';
+import Link from '@material-ui/core/Link';
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -39,7 +40,10 @@ export default function ShareRoomDetails(props) {
         <DialogTitle id="alert-dialog-slide-title">Share this MeetingID with the participant!</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
-            Meeting Id : {props.roomId}
+            Meeting Id : 
+            <Link href= {`https://100ms.netlify.app/#/joinRoom?id=${props.roomId}`} >
+            {`https://100ms.netlify.app/#/joinRoom?id=${props.roomId}`}
+      </Link>
           </DialogContentText>
         </DialogContent>
         <DialogActions>

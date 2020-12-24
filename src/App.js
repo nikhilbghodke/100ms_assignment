@@ -108,7 +108,7 @@ class App extends Component{
     )}>
             
         </Route>
-        <Route exact path="/joinRoom" render={(props)=>(
+        <Route  path="/joinRoom" render={(props)=>(
           <JoinRoom createClient={this._createClient} {...props} />
     )}>
             

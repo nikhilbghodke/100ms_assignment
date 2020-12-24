@@ -12,7 +12,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-
+import qs from "qs"
 import { withStyles } from "@material-ui/core/styles";
 function Copyright() {
   return (
@@ -49,10 +49,10 @@ const styles = (theme) => ({
 class JoinRoom extends Component {
     constructor(props){
         super(props)
-        console.log(props)
+        console.log(props.location)
         this.state={
           username:"",
-          roomid:""
+          roomid:""||qs.parse(this.props.location.search, { ignoreQueryPrefix: true }).id
         }
       }
   
@@ -84,6 +84,7 @@ class JoinRoom extends Component {
                 label="Room Id"
                 id="roomid"
                 value={this.state.roomid}
+                disabled={qs.parse(this.props.location.search, { ignoreQueryPrefix: true }).id}
                 onChange={(e)=>{
                     this.setState({...this.state,"roomid":e.target.value})
                   }}
